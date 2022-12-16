@@ -8,7 +8,7 @@ int main()
     int x,y;
     bool exit=0;
     //Greating a map
-     cout<<"Give as the size of the map please :\n";
+     cout<<"Give us the size of the map please :\n";
      cout<<"Waiting for numbers of rows, x: ";
      cin>>x;
      cout<<"Waiting for numbers of colums, y: ";
