@@ -9,9 +9,9 @@ int main()
     bool exit=0;
     //Greating a map
      cout<<"Give us the size of the map please :\n";
-     cout<<"Waiting for numbers of rows, x: ";
+     cout<<"Waiting for number of rows, x: ";
      cin>>x;
-     cout<<"Waiting for numbers of colums, y: ";
+     cout<<"Waiting for number of colums, y: ";
      cin>>y;
 
      int **map;
@@ -47,7 +47,7 @@ int main()
     }while(count>0);
 
 
-    //puting waterin map (25% of map)
+    //puting water in map (25% of map)
     count = x*y*0.25;
     do{
         
