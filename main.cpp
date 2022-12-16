@@ -30,6 +30,37 @@ int main()
            map[i][j]=0;
         }    
     }
+
+
+    //Puting trees in the map (20% of map)
+    int count = x*y*0.2;
+    do{
+        
+        int i=rand()%x;
+        int j=rand()%y;
+
+        if(map[i][j]==0)
+        {
+            map[i][j]=1;
+            --count;
+        }
+    }while(count>0);
+
+
+    //puting waterin map (25% of map)
+    count = x*y*0.25;
+    do{
+        
+        int i=rand()%x;
+        int j=rand()%y;
+
+        if(map[i][j]==0)
+        {
+            map[i][j]=2;
+            --count;
+        }
+    }while(count>0);
+
     //Printing map
     for(int i = 0;i < x;i++) 
     {
@@ -47,6 +78,7 @@ int main()
         <<"Press a to move left\n"
         <<"Press d to move right\n"
         <<"Press s to move back\n"
+        <<"Press p to pause the game\n"
         <<"Press x to exit the game\n\n";
 
     while(!exit)
@@ -67,6 +99,10 @@ int main()
             case 'd':
                 cout<<" \n\n";
                 break;
+            case 'p':
+                //print number of remaining Vampires,Werewolfs,Num of magic filters of avatar
+                cout<<" \n\n";
+                break;  
             case 'x' :
                 cout<<" \n\n";
                 exit=1;
