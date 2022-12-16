@@ -8,10 +8,10 @@ int main()
     int x,y;
     bool exit=0;
     //Greating a map
-     cout<<"Give us the size of the map please :\n";
-     cout<<"Waiting for number of rows, x: ";
+     cout<<"Give as the size of the map please :\n";
+     cout<<"Waiting for numbers of rows, x: ";
      cin>>x;
-     cout<<"Waiting for number of colums, y: ";
+     cout<<"Waiting for numbers of colums, y: ";
      cin>>y;
 
      int **map;
@@ -47,7 +47,7 @@ int main()
     }while(count>0);
 
 
-    //puting water in map (25% of map)
+    //puting waterin map (25% of map)
     count = x*y*0.25;
     do{
         
@@ -66,7 +66,29 @@ int main()
     {
         for(int j = 0;j < y;j++) 
         {
-           cout<<map[i][j];
+            switch(map[i][j])
+            {
+                case 0:
+                    cout<<"*";
+                    break;
+                case 1:
+                    cout<<"T";
+                    break;
+                case 2:
+                    cout<<"~";
+                    break;
+                case 3:
+                    cout<<"";
+                    break;
+                case 4:
+                    //print number of remaining Vampires,Werewolfs,Num of magic filters of avatar
+                    cout<<"";
+                    break;  
+                case 5 :
+                    cout<<"";
+                    break;
+            }
+        
         }    
         cout<<endl;
     }
