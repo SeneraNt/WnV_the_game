@@ -56,9 +56,9 @@ class Avatar : Ancestor {
 private:
     //int num_of_magic_filters;
 public:
-    Avatar(int xx, int yy)
+    Avatar(int xx, int yy , int id)
     {
-        set_x(xx); set_y(yy); set_id(5);
+        set_x(xx); set_y(yy); set_id(id);
     }
     //full healing func of all members with magic filters
 

@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {   
-    int x,y;
+    int x,y,z;
     bool exit=0;
     //Greating a map
      cout<<"Give as the size of the map please :\n";
@@ -15,8 +15,27 @@ int main()
      cin>>x;
      cout<<"Waiting for numbers of columns, y: ";
      cin>>y;
+     cout << endl << "Now pick a side!" << endl;
+     cout << "Press 5 for team Vampires or 6 for Werewolves ~."<<endl;
+          
+         do {
+             
+             cin >> z;
+             if (z == 0)
+             {
+                 cout << endl << "K. Bye";
+                 return 0;
+             }
+                 
+             
+             if (z != 5 && z != 6)
+                 cout << "WRONG INPUT " <<endl<<"Press 5 for team Vampires or 6 for Werewolves ~.Or 0 if you don't wont to play this game -.-"<<endl;
 
-     Map  my_map(x,y);
+         } while (z != 5 && z != 6 );
+         
+
+
+     Map  my_map(x,y,z);
     my_map.print_map();
     //menu
     char key;

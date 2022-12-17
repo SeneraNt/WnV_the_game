@@ -11,7 +11,7 @@ class Map{
             int row;
             int column;
         public:
-            Map(int const x , int const y);
+            Map(int const x , int const y,int const z);
             ~Map();
             void print_map();
 

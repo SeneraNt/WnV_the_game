@@ -1,7 +1,7 @@
 #include"map.h"
 #include"Avatar.h"
 
-Map::Map(int const x, int const y)
+Map::Map(int const x, int const y, int const z)
 {
     row=x;
     column=y;
@@ -67,6 +67,7 @@ Map::Map(int const x, int const y)
         }
     } while (count > 0);
 
+    //placing wolves
     count = x * y / 15;
     do {
 
@@ -75,14 +76,26 @@ Map::Map(int const x, int const y)
 
         if (map[i][j] == 0)
         {
-            map[i][j] = 3;
+            map[i][j] = 4;
             Werewolves wolves(i, j);
             --count;
         }
     } while (count > 0);
     
+   //placing player
+    count = 1;
+    do {
 
-    
+        int i = rand() % x;
+        int j = rand() % y;
+
+        if (map[i][j] == 0)
+        {
+            map[i][j] = z;
+            Avatar player(i,j,z);
+            --count;
+        }
+    } while (count > 0);
 }
 
 Map::~Map()
@@ -105,10 +118,10 @@ void Map::print_map()
             switch(map[i][j])
             {
                 case 0://land
-                    cout<<"*";
+                    cout<<"_";
                     break;
                 case 1://trees
-                    cout<<"T";
+                    cout<<"^";
                     break;
                 case 2://water
                     cout<<"~";
@@ -119,9 +132,11 @@ void Map::print_map()
                 case 4://werewolves
                     cout<<"w";
                     break;  
-                case 5 ://player
-                    cout<<"";
+                case 5 ://player suporting vamps
+                    cout<<"|V|";
                     break;
+                case 6: //player suporting wolves
+                    cout << "W";
             }
         
         }    
