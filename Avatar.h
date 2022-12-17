@@ -19,7 +19,7 @@ public:
     //getters
     int get_x() { return x; }
     int get_y() { return y; }
-    virtual int get_id() { return id; }
+   /* virtual */int get_id() { return id; }
    // int get_health() { return health; }
    // int get_healing_power() { return healing_power; }
     
