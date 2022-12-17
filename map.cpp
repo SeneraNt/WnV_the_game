@@ -1,12 +1,13 @@
 #include"map.h"
+#include"Avatar.h"
 
 Map::Map(int const x, int const y)
 {
     row=x;
-    colum=y;
+    column=y;
 
     map = new int* [x] ; //allocation for rows
-     // with the for loop we allocate memory for the colums of each row
+     // with the for loop we allocate memory for the columns of each row
      for(int i=0;i<x;i++)
      {
         map[i]= new int [y]; 
@@ -37,7 +38,7 @@ Map::Map(int const x, int const y)
     }while(count>0);
 
 
-    //puting waterin map (25% of map)
+    //puting water in map (25% of map)
     count = x*y*0.25;
     do{
         
@@ -50,6 +51,37 @@ Map::Map(int const x, int const y)
             --count;
         }
     }while(count>0);
+
+    //placing vampires
+    count = x * y / 15;
+    do {
+
+        int i = rand() % x;
+        int j = rand() % y;
+
+        if (map[i][j] == 0)
+        {
+            map[i][j] = 3;
+            Vampires vamps(i, j);
+            --count;
+        }
+    } while (count > 0);
+
+    count = x * y / 15;
+    do {
+
+        int i = rand() % x;
+        int j = rand() % y;
+
+        if (map[i][j] == 0)
+        {
+            map[i][j] = 3;
+            Werewolves wolves(i, j);
+            --count;
+        }
+    } while (count > 0);
+    
+
     
 }
 
@@ -68,26 +100,26 @@ void Map::print_map()
     //Printing map
     for(int i = 0;i < row;i++) 
     {
-        for(int j = 0;j < colum;j++) 
+        for(int j = 0;j < column;j++) 
         {
             switch(map[i][j])
             {
-                case 0:
+                case 0://land
                     cout<<"*";
                     break;
-                case 1:
+                case 1://trees
                     cout<<"T";
                     break;
-                case 2:
+                case 2://water
                     cout<<"~";
                     break;
-                case 3:
-                    cout<<"";
+                case 3://vamps
+                    cout<<"v";
                     break;
-                case 4:
-                    cout<<"";
+                case 4://werewolves
+                    cout<<"w";
                     break;  
-                case 5 :
+                case 5 ://player
                     cout<<"";
                     break;
             }

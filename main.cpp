@@ -1,5 +1,6 @@
 #include<iostream>
 #include"map.h"
+#include"Avatar.h"
 using namespace std;
 
 
@@ -12,7 +13,7 @@ int main()
      cout<<"Give as the size of the map please :\n";
      cout<<"Waiting for numbers of rows, x: ";
      cin>>x;
-     cout<<"Waiting for numbers of colums, y: ";
+     cout<<"Waiting for numbers of columns, y: ";
      cin>>y;
 
      Map  my_map(x,y);
