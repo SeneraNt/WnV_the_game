@@ -54,6 +54,9 @@ Map::Map(int const x, int const y, int const z)
 
     //placing vampires
     count = x * y / 15;
+    //Vampires* vamp=nullptr;
+
+    int max_vamps = count;
     do {
 
         int i = rand() % x;
@@ -61,8 +64,11 @@ Map::Map(int const x, int const y, int const z)
 
         if (map[i][j] == 0)
         {
-            map[i][j] = 3;
-            Vampires vamps(i, j);
+            
+            
+            Vampires vmp(i, j,count);//constructing vamp
+            map[i][j] = vmp.get_id();
+            //vamp->vmp;//keep it to Vamp pointer
             --count;
         }
     } while (count > 0);
@@ -76,8 +82,9 @@ Map::Map(int const x, int const y, int const z)
 
         if (map[i][j] == 0)
         {
-            map[i][j] = 4;
-            Werewolves wolves(i, j);
+            Werewolves wolves(i, j,count);
+            map[i][j] = wolves.get_id();
+           
             --count;
         }
     } while (count > 0);
@@ -133,7 +140,7 @@ void Map::print_map()
                     cout<<"w";
                     break;  
                 case 5 ://player suporting vamps
-                    cout<<"|V|";
+                    cout<<"V";
                     break;
                 case 6: //player suporting wolves
                     cout << "W";
