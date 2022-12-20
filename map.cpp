@@ -1,5 +1,5 @@
 #include"map.h"
-#include"Avatar.h"
+
 
 Map::Map(int const x, int const y, int const z)
 {
@@ -51,45 +51,7 @@ Map::Map(int const x, int const y, int const z)
             --count;
         }
     }while(count>0);
-
-    //placing vampires
-    count = x * y / 15;
-    //Vampires* vamp=nullptr;
-
-    int max_vamps = count;
-    do {
-
-        int i = rand() % x;
-        int j = rand() % y;
-
-        if (map[i][j] == 0)
-        {
-            
-            
-            Vampires vmp(i, j,count);//constructing vamp
-            map[i][j] = vmp.get_id();
-            //vamp->vmp;//keep it to Vamp pointer
-            --count;
-        }
-    } while (count > 0);
-
-    //placing wolves
-    count = x * y / 15;
-    do {
-
-        int i = rand() % x;
-        int j = rand() % y;
-
-        if (map[i][j] == 0)
-        {
-            Werewolves wolves(i, j,count);
-            map[i][j] = wolves.get_id();
-           
-            --count;
-        }
-    } while (count > 0);
-    
-   //placing player
+    //putinh 1 filter on map
     count = 1;
     do {
 
@@ -98,11 +60,12 @@ Map::Map(int const x, int const y, int const z)
 
         if (map[i][j] == 0)
         {
-            map[i][j] = z;
-            Avatar player(i,j,z);
+            map[i][j] = 7;
             --count;
         }
     } while (count > 0);
+
+    
 }
 
 Map::~Map()
@@ -138,12 +101,14 @@ void Map::print_map()
                     break;
                 case 4://werewolves
                     cout<<"w";
-                    break;  
+                    break;
                 case 5 ://player suporting vamps
                     cout<<"V";
                     break;
                 case 6: //player suporting wolves
                     cout << "W";
+                case 7://magic filter
+                    cout << "&";
             }
         
         }    
@@ -151,4 +116,23 @@ void Map::print_map()
     }
 
 
+}
+
+const int Map::get_num_of_rows()
+{
+    return row;
+}
+const int Map::get_num_of_columns()
+{
+    return column;
+}
+
+int Map::get_map_id(int x, int y)
+{
+    return map[x][y];
+}
+
+void Map::set_map_id(int x, int y, int value)
+{
+    map[x][y] = value;
 }
