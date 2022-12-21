@@ -1,8 +1,10 @@
 #include"map.h"
+#include "Random.h"
+#include "Avatar.h"
 
 int main()
 {
-    int x, y;// , z;
+    /*int x, y;// , z;
     bool exit=0;
     //Greating a map
      cout<<"Give as the size of the map please :\n";
@@ -65,6 +67,24 @@ int main()
                     <<"Press x to exit the game\n\n";
         }
     }
-
+    */
+    Random::Init();
+    int x, y;
+    cout << "Give as the size of the map please :\n";
+    cout << "Waiting for numbers of rows, x: ";
+    cin >> x;
+    cout << "Waiting for numbers of columns, y: ";
+    cin >> y;
+    Map::Init(x, y);
+    Map& map = Map::Get();
+    char key;
+    while (true)
+    {
+        map.print_map();
+        cin >> key;
+        cout << '\n';
+        map.Move();
+    }
+    
     return 0;
 }

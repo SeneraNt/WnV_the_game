@@ -1,5 +1,13 @@
 #include"map.h"
+#include "Random.h"
 
+//Kanonika 8a eprepe na to diagrafoume kapoia stigmi
+// alla 8a katastrepsi ti mnimi to leitourgiko otan stamatisi to application
+// opote den mas noiazei afou 8a zei gia olo to lifetime tou application
+static Map* sMap = nullptr;
+
+void Map::Init(int x, int y) { sMap = new Map(x, y); }
+Map& Map::Get() { return *sMap; }
 
 Map::Map(int const x, int const y)
 {   
@@ -26,8 +34,8 @@ Map::Map(int const x, int const y)
     int count = x * y * 0.2;
     do {
 
-        int i = rand() % row_end;
-        int j = rand() % column_end;
+        int i = Random::NextInt(0, row_end);
+        int j = Random::NextInt(0, column_end);
 
         if (map[i][j] == 0)
         {
@@ -40,8 +48,8 @@ Map::Map(int const x, int const y)
     count = x * y * 0.25;
     do {
 
-        int i = rand() % row_end;
-        int j = rand() % column_end;
+        int i = Random::NextInt(0, row_end);
+        int j = Random::NextInt(0, column_end);
 
         if (map[i][j] == 0)
         {
@@ -54,50 +62,89 @@ Map::Map(int const x, int const y)
     count = 1;
     do {
 
-        int i = rand() % row_end;
-        int j = rand() % column_end;
-
+        int i = Random::NextInt(0, row_end);
+        int j = Random::NextInt(0, column_end);
+        
         if (map[i][j] == 0)
         {
             map[i][j] = 7;
             --count;
         }
     } while (count > 0);
+
+    int num = Random::NextInt(1, x * y / 15);
+    for (int i = 0; i < num * 2; i++)
+    {
+        int xx = Random::NextInt(0, row_end);
+        int yy = Random::NextInt(0, column_end);
+        char tile = get_tile(xx, yy);
+        while (tile == 'v' || tile == 'w' || tile == 'V' || tile == 'W' || tile == '&')
+        {
+            xx = Random::NextInt(0, row_end);
+            yy = Random::NextInt(0, column_end);
+            tile = get_tile(xx, yy);
+        }
+        if (i % 2 == 0)
+            npcs.emplace_back(new Vampire(xx, yy));
+        else
+            npcs.emplace_back(new Werewolf(xx, yy));
+    }
 }
 
 void Map::print_map()
 {
+    size_t size = (column_end + 1) * 4 + 2;
+    char* delimeter = new char[size];
+    memset(delimeter, '-', size);
+    delimeter[size - 1] = '\0';
+    cout << delimeter << '\n';
     for(int i=0;i<map.size();i++)
     {
-        for (int j = 0; j < map[i].size(); j++)
+        for (int j = 0; j < map[i].size() - 1; j++)
         {
-            switch (map[i][j])
-            {
-            case 0://land
-                cout << "_";
-                break;
-            case 1://trees
-                cout << "^";
-                break;
-            case 2://water
-                cout << "~";
-                break;
-            case 3://vamps
-                cout << "v";
-                break;
-            case 4://werewolves
-                cout << "w";
-                break;
-            case 5://player suporting vamps
-                cout << "V";
-                break;
-            case 6: //player suporting wolves
-                cout << "W";
-            case 7://magic filter
-                cout << "&";
-            }
-
+            cout << "|";
+            cout << ' ' << get_tile(i, j) << ' ';
         }
-        cout<<endl;
+        cout << "| " << get_tile(i, map[i].size() - 1) << " |\n";
+        cout << delimeter << '\n';
+    }
+}
+
+void Map::Move()
+{
+    for (NPC* npc : npcs)
+        npc->Move();
+}
+
+char Map::get_tile(int x, int y) const
+{
+    int id = map[x][y];
+    for (NPC* npc : npcs)
+    {
+        if (npc->GetX() == x && npc->GetY() == y)
+        {
+            id = npc->GetID();
+            break;
+        }
+    }
+
+    switch (id)
+    {
+    case 0://land
+        return '_';
+    case 1://trees
+        return '^';
+    case 2://water
+        return '~';
+    case 3://vamps
+        return 'v';
+    case 4://werewolves
+        return 'w';
+    case 5://player suporting vamps
+        return 'V';
+    case 6: //player suporting wolves
+        return 'W';
+    case 7://magic filter
+        return '&';
     }
 }
