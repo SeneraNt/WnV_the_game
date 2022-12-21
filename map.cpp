@@ -26,8 +26,8 @@ Map::Map(int const x, int const y)
     int count = x * y * 0.2;
     do {
 
-        int i = rand() % x;
-        int j = rand() % y;
+        int i = rand() % row_end;
+        int j = rand() % column_end;
 
         if (map[i][j] == 0)
         {
@@ -40,8 +40,8 @@ Map::Map(int const x, int const y)
     count = x * y * 0.25;
     do {
 
-        int i = rand() % x;
-        int j = rand() % y;
+        int i = rand() % row_end;
+        int j = rand() % column_end;
 
         if (map[i][j] == 0)
         {
@@ -54,8 +54,8 @@ Map::Map(int const x, int const y)
     count = 1;
     do {
 
-        int i = rand() % x;
-        int j = rand() % y;
+        int i = rand() % row_end;
+        int j = rand() % column_end;
 
         if (map[i][j] == 0)
         {
