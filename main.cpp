@@ -1,8 +1,12 @@
 #include"map.h"
+#include"Avatar.h"
+
+
+
 
 int main()
 {
-    int x, y;// , z;
+    int x, y, z;
     bool exit=0;
     //Greating a map
      cout<<"Give as the size of the map please :\n";
@@ -10,16 +14,40 @@ int main()
      cin>>x;
      cout<<"Waiting for numbers of columns, y: ";
      cin>>y;
+     cout << endl << "Now pick a side!" << endl;
+     cout << "Press 5 for team Vampires or 6 for Werewolves ~." << endl;
+
+     do {
+
+         cin >> z;
+         if (z == 0)
+         {
+             cout << endl << "K. Bye";
+             return 0;
+         }
+
+
+         if (z != 5 && z != 6)
+             cout << "WRONG INPUT " << endl << "Press 5 for team Vampires or 6 for Werewolves ~.Or 0 if you don't wont to play this game -.-" << endl;
+
+     } while (z != 5 && z != 6);
 
      //constructing map
      Map  my_map(x,y);
+
+     //No of vampires and werewolves
+     int max = x * y / 15;
+    //constructing vampires
+     Vampires vamps(max,my_map);
+   //constructing werewolves
+     Werewolves wolves(max, my_map);
+   //constructing Player
+     Avatar player(z, my_map);
      my_map.print_map();
 
-     cout << endl << " cl_end= " << my_map.get_num_of_column_end()
-         << endl << " row_end= " << my_map.get_num_of_row_end()<<endl;
+     
 
-     vector<vector<int >>map1 = my_map.get_map();
-     cout << "dokimh " << map1[1][1]<<endl;
+     
 
      //menu
     char key;
@@ -36,23 +64,28 @@ int main()
 
         switch(key)
         {
-            case 'w':
+            case 'w'://ahead
                 cout<<"\n\n";
+                player.move("ahead", my_map);
                 break;
-            case 'a':
+            case 'a'://left
+                
                 cout<<" \n\n";
+                player.move("left", my_map);
                 break;
-            case 's':
+            case 's'://back
                 cout<<" \n\n";
+                player.move("back", my_map);
                 break;
-            case 'd':
+            case 'd'://right
                 cout<<" \n\n";
+                player.move("right", my_map);
                 break;
-            case 'p':
+            case 'p'://pause
                 //print number of remaining Vampires,Werewolfs,Num of magic filters of avatar
                 cout<<" \n\n";
                 break;  
-            case 'x' :
+            case 'x' ://exit
                 cout<<" \n\n";
                 exit=1;
                 break;
@@ -64,6 +97,7 @@ int main()
                     <<"Press s to move back\n"
                     <<"Press x to exit the game\n\n";
         }
+        my_map.print_map();
     }
 
     return 0;

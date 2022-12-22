@@ -67,14 +67,21 @@ Map::Map(int const x, int const y)
 
 void Map::print_map()
 {
+    //-----------------------------
+    for (int d = 0; d <=map.size() + 1; d++)
+        cout << "=";
+    cout << endl;
+    //-----------------------------
     for(int i=0;i<map.size();i++)
     {
+        cout << "|";
         for (int j = 0; j < map[i].size(); j++)
         {
+            
             switch (map[i][j])
             {
             case 0://land
-                cout << "_";
+                cout << " ";
                 break;
             case 1://trees
                 cout << "^";
@@ -93,11 +100,19 @@ void Map::print_map()
                 break;
             case 6: //player suporting wolves
                 cout << "W";
+                break;
             case 7://magic filter
                 cout << "&";
+                break;
             }
-
+           
+            
         }
+        cout << "|";
         cout<<endl;
     }
+    //----------------------------
+    for (int d = 0; d <= map.size() + 1; d++)
+        cout << "=";
+    cout << endl;
 }
