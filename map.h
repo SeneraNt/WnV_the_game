@@ -4,9 +4,17 @@
 
 using namespace std;
 
+//Kanonika 8a eprepe na to diagrafoume kapoia stigmi
+// alla 8a katastrepsi ti mnimi to leitourgiko otan stamatisi to application
+// opote den mas noiazei afou 8a zei gia olo to lifetime tou application
+
+
+
 class Map {
 private:
-    vector<vector<int>> map;
+   
+     vector<vector< int>> map;
+     
     int row_end;
     int column_end;
 public:
@@ -15,21 +23,18 @@ public:
     void print_map();
    int get_num_of_row_end() { return row_end; }
    int get_num_of_column_end() { return column_end; }
-   vector<vector<int>>& get_map(){ return map; }
-   void set_data(int x, int y, int value) 
+ 
+   Map& set_data(int x, int y, int value,Map &map)
    {
-       int count = x * y;
-  
-       int& ref = map[x][y];
+       int& ref = this->map[x][y];
        ref = value;
        
-       
-
-       cout<<endl<<endl;
-       print_map();
-       cout<<endl<<endl;
-       
+     
+       return map;
+    
    }
+  
    int get_data(int x, int y){return map[x][y];}
   
 };
+
