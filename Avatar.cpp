@@ -15,6 +15,49 @@ NPC::NPC(int xx, int yy)
     power_defence = Random::NextInt(1, 2);
 }
 
+void NPC::Battleround()
+{
+    vector<NPC*>npcs = Map::Get().getNPC();
+
+    for (NPC* attackingNpc : npcs){
+        int attackingNpcX = attackingNpc->GetX();
+        int attackingNpcY = attackingNpc->GetY();
+        int attackingNpcAttack = attackingNpc->power_attack;
+        int attackingNpcType = attackingNpc->GetID();
+
+        for (NPC* defendingNpc : npcs){
+            int defendingNpcX = defendingNpc->GetX();
+            int defendingNpcY = defendingNpc->GetY();
+            int defendingNpcType = defendingNpc->GetID();
+
+            int defendingNpcAttack = defendingNpc->power_attack;
+            int defendingNpcDeffence = defendingNpc->power_defence;
+
+            bool attackFlag = false;
+            // Check If the Attacking and Deffending NPCs refere to Difference NPCs
+            //if (attackingNpcX != defendingNpcX && attackingNpcY != defendingNpcY){
+                if ((abs(attackingNpcX - defendingNpcX) == 1) && (attackingNpcY == defendingNpcY ) ){
+                    attackFlag = true;
+                }
+
+                if ((abs(attackingNpcY - defendingNpcY) == 1) && (attackingNpcX == defendingNpcX) ){
+                    attackFlag = true;
+                }
+           // }
+
+            if (attackFlag && attackingNpcType != defendingNpcType){
+                cout << "NPC NEXT TO NPC" << endl;
+                if (attackingNpcAttack > defendingNpcAttack){
+                    cout << "Attacking" << " AX:" << attackingNpcX << " AY:" << attackingNpcY << " AT:" << attackingNpcType << " AA:" << attackingNpcAttack << endl;
+
+                    cout << "Defending" << " DX:" << defendingNpcX << " DY:" << defendingNpcY << " DT:" << defendingNpcType << " DD:" << defendingNpcDeffence << endl;
+                    defendingNpc->SetHealth(defendingNpc->GetHealth() - (attackingNpcAttack-defendingNpcDeffence));
+                }
+            }
+        }
+    }
+}
+
 void NPC::Move()
 {
     if (Random::NextInt(0, 4) == 0)
@@ -44,45 +87,53 @@ std::array<int, 2> Vampire::TryMove()
     std::vector<std::array<int, 2>> moves;
     if (yy - 1 >= 0)
     {
-        if (char tile = map.get_tile(xx, yy - 1); tile == '_' || tile == '&')
+        char tile = map.get_tile(xx, yy - 1);
+        if ( tile == '_' || tile == '&')
             moves.emplace_back(std::array<int, 2>{ xx, yy - 1 });
         if (xx - 1 >= 0)
         {
-            if (char tile = map.get_tile(xx - 1, yy - 1); tile == '_' || tile == '&')
+            char tile = map.get_tile(xx - 1, yy - 1);
+            if ( tile == '_' || tile == '&')
                 moves.emplace_back(std::array<int, 2> { xx - 1, yy - 1});
         }
         if (xx + 1 < row)
         {
-            if (char tile = map.get_tile(xx + 1, yy - 1); tile == '_' || tile == '&')
+            char tile = map.get_tile(xx + 1, yy - 1);
+            if ( tile == '_' || tile == '&')
                 moves.emplace_back(std::array<int, 2> { xx + 1, yy - 1});
         }
     }
     if (yy + 1 < col)
     {
-        if (char tile = map.get_tile(xx, yy + 1); tile == '_' || tile == '&')
+        char tile = map.get_tile(xx, yy + 1);
+        if ( tile == '_' || tile == '&')
             moves.emplace_back(std::array<int, 2> { xx, yy + 1 });
         if (xx - 1 >= 0)
         {
-            if (char tile = map.get_tile(xx - 1, yy + 1); tile == '_' || tile == '&')
+            char tile = map.get_tile(xx - 1, yy + 1);
+            if ( tile == '_' || tile == '&')
                 moves.emplace_back(std::array<int, 2> { xx - 1, yy + 1});
         }
         if (xx + 1 < row)
         {
-            if (char tile = map.get_tile(xx + 1, yy + 1); tile == '_' || tile == '&')
+            char tile = map.get_tile(xx + 1, yy + 1);
+            if ( tile == '_' || tile == '&')
                 moves.emplace_back(std::array<int, 2> { xx + 1, yy + 1});
         }
     }
     if (xx - 1 >= 0)
     {
-        if (char tile = map.get_tile(xx - 1, yy); tile == '_' || tile == '&')
+        char tile = map.get_tile(xx - 1, yy);
+        if ( tile == '_' || tile == '&')
             moves.emplace_back(std::array<int, 2> { xx - 1, yy });
     }
     if (xx + 1 < row)
     {
-        if (char tile = map.get_tile(xx + 1, yy); tile == '_' || tile == '&')
+        char tile = map.get_tile(xx + 1, yy);
+        if ( tile == '_' || tile == '&')
             moves.emplace_back(std::array<int, 2> { xx + 1, yy });
     }
-    
+
     return moves.size() == 0 ? std::array<int, 2>{ -2, -2 } : moves[Random::NextInt(0, moves.size() - 1)];
 }
 
@@ -98,23 +149,27 @@ std::array<int, 2> Werewolf::TryMove()
     std::vector<std::array<int, 2>> moves;
     if (xx - 1 >= 0)
     {
-        if (char tile = map.get_tile(xx - 1, yy); tile == '_' || tile == '&')
+        char tile = map.get_tile(xx - 1, yy);
+        if ( tile == '_' || tile == '&')
             moves.emplace_back(std::array<int, 2> { xx - 1, yy });
     }
     if (xx + 1 < row)
     {
-        if (char tile = map.get_tile(xx + 1, yy); tile == '_' || tile == '&')
+        char tile = map.get_tile(xx + 1, yy);
+        if ( tile == '_' || tile == '&')
             moves.emplace_back(std::array<int, 2> { xx + 1, yy });
     }
     if (yy - 1 >= 0)
     {
-        if (char tile = map.get_tile(xx, yy - 1); tile == '_' || tile == '&')
+        char tile = map.get_tile(xx, yy - 1);
+        if ( tile == '_' || tile == '&')
             moves.emplace_back(std::array<int, 2>{ xx, yy - 1 });
-        
+
     }
     if (yy + 1 < col)
     {
-        if (char tile = map.get_tile(xx, yy + 1); tile == '_' || tile == '&')
+        char tile = map.get_tile(xx, yy + 1);
+        if ( tile == '_' || tile == '&')
             moves.emplace_back(std::array<int, 2> { xx, yy + 1 });
     }
     return moves.size() == 0 ? std::array<int, 2>{ -2, -2 } : moves[Random::NextInt(0, moves.size() - 1)];
@@ -122,4 +177,65 @@ std::array<int, 2> Werewolf::TryMove()
 
 Avatar::Avatar(int xx, int yy, int _id)
     : Ancestor(xx, yy), id(_id) {}
+
+void Avatar::Move(int xx, int yy)
+{
+    Map& map = Map::Get();
+    if (xx == -1 && yy == 0)
+    {
+        if (GetX() - 1 < 0)
+            return;
+        char tile = map.get_tile(x + xx, y + yy);
+        if (tile == '&')
+        {
+            map.set_data(x + xx, y + yy, '_');
+            SetHealingPower(GetHealingPower() + 1);
+        }
+        else if (tile != '_')
+            return;
+        x += xx;
+    }
+    else if (xx == 1 && yy == 0)
+    {
+        if (GetX() + 1 > map.get_num_of_row_end())
+            return;
+        char tile = map.get_tile(x + xx, y + yy);
+        if (tile == '&')
+        {
+            map.set_data(x + xx, y + yy, '_');
+            SetHealingPower(GetHealingPower() + 1);
+        }
+        else if (tile != '_')
+            return;
+        x += xx;
+    }
+    else if (xx == 0 && yy == -1)
+    {
+        if (GetY() - 1 < 0)
+            return;
+        char tile = map.get_tile(x + xx, y + yy);
+        if (tile == '&')
+        {
+            map.set_data(x + xx, y + yy, '_');
+            SetHealingPower(GetHealingPower() + 1);
+        }
+        else if (tile != '_')
+            return;
+        y += yy;
+    }
+    else if (xx == 0 && yy == 1)
+    {
+        if (GetY() + 1 > map.get_num_of_column_end())
+            return;
+        char tile = map.get_tile(x + xx, y + yy);
+        if (tile == '&')
+        {
+            map.set_data(x + xx, y + yy, '_');
+            SetHealingPower(GetHealingPower() + 1);
+        }
+        else if (tile != '_')
+            return;
+        y += yy;
+    }
+}
 

@@ -31,6 +31,7 @@ class NPC : public Ancestor {
 public:
     NPC(int xx, int yy);
     void Move();
+    void Battleround();
 protected:
     virtual std::array<int, 2> TryMove() = 0;
 private:
@@ -43,7 +44,6 @@ public:
     Vampire(int xx, int yy)
         : NPC(xx, yy) {}
     virtual int GetID() const override { return 3; }
-
 private:
     virtual std::array<int, 2> TryMove() override;
 };
@@ -61,6 +61,7 @@ class Avatar : public Ancestor {
 public:
     Avatar(int xx, int yy, int _id);
     virtual int GetID() const override { return id; }
+    void Move(int xx, int yy);
 private:
     int potions = 1;
     int id;
