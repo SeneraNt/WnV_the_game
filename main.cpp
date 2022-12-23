@@ -1,6 +1,7 @@
 #include"map.h"
-#include"Avatar.h"
-
+#include"avatar.h"
+#include"vampire.h"
+#include"werewolve.h"
 
 
 
@@ -67,19 +68,27 @@ int main()
             case 'w'://ahead
                 cout<<"\n\n";
                 player.move("ahead", my_map);
+                //vamps.move(vamps.vamp_count(),my_map,vamps);
+                //wolves.move(wolves.wolves_count(), my_map, wolves);
                 break;
             case 'a'://left
                 
                 cout<<" \n\n";
                 player.move("left", my_map);
+                //vamps.move(vamps.vamp_count(), my_map, vamps);
+                //wolves.move(wolves.wolves_count(), my_map, wolves);
                 break;
             case 's'://back
                 cout<<" \n\n";
                 player.move("back", my_map);
+                //vamps.move(vamps.vamp_count(), my_map, vamps);
+                //wolves.move(wolves.wolves_count(), my_map, wolves);
                 break;
             case 'd'://right
                 cout<<" \n\n";
                 player.move("right", my_map);
+                //vamps.move(vamps.vamp_count(), my_map, vamps);
+                //wolves.move(wolves.wolves_count(), my_map, wolves);
                 break;
             case 'p'://pause
                 //print number of remaining Vampires,Werewolfs,Num of magic filters of avatar

@@ -18,23 +18,13 @@ private:
     int row_end;
     int column_end;
 public:
-    Map(int const x, int const y);
+    Map(int const , int const );
     //~Map();
     void print_map();
-   int get_num_of_row_end() { return row_end; }
-   int get_num_of_column_end() { return column_end; }
- 
-   Map& set_data(int x, int y, int value,Map &map)
-   {
-       int& ref = this->map[x][y];
-       ref = value;
-       
-     
-       return map;
-    
-   }
-  
-   int get_data(int x, int y){return map[x][y];}
+    int get_num_of_row_end();
+    int get_num_of_column_end();
+    int get_data(int , int );
+   Map& set_data(int , int , int ,Map& );
   
 };
 

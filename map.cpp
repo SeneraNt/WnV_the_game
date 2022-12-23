@@ -1,6 +1,6 @@
 #include"map.h"
-
-
+//Map conctructor function
+//-----------------------------------------------------------------------------//
 Map::Map(int const x, int const y)
 {   
     row_end=x-1;
@@ -8,9 +8,7 @@ Map::Map(int const x, int const y)
     //x: num of rows
     //y:num of columns
 
-    //Giving the start input in the array
-   
-
+    //Giving the start input in the vector of vectors
     for(int i=0;i<x;i++)
     {
         vector<int>row;
@@ -64,7 +62,9 @@ Map::Map(int const x, int const y)
         }
     } while (count > 0);
 }
-
+//-------------------------------------------------------------------------------------------------//
+//Map output function
+//-------------------------------------------------------------------------------------------------//
 void Map::print_map()
 {
     //-----------------------------
@@ -116,3 +116,28 @@ void Map::print_map()
         cout << "=";
     cout << endl;
 }
+//-------------------------------------------------------------------------------------------------//
+//Map  get_num_of_row_end function :: returns the num of rows counting from 0.
+//-------------------------------------------------------------------------------------------------//
+int Map ::get_num_of_row_end() { return row_end; }
+//-------------------------------------------------------------------------------------------------//
+//Map  get_num_of_column_end function :: returns the num of rows counting from 0.
+//-------------------------------------------------------------------------------------------------//
+int Map :: get_num_of_column_end() { return column_end; }
+//-------------------------------------------------------------------------------------------------//
+//Map get_data function :: returns data of given coordinates 
+//-------------------------------------------------------------------------------------------------//
+int Map:: get_data(int x, int y){return map[x][y];}
+//-------------------------------------------------------------------------------------------------//
+//Map set_data function :: updates coordinates value in map and
+//returns a Map class object with updated data as reference
+//-------------------------------------------------------------------------------------------------//
+Map& Map:: set_data(int x, int y, int value,Map &map)
+   {
+       int& ref = this->map[x][y];
+       ref = value;
+       
+     
+       return map;
+    
+   }
