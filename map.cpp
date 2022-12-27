@@ -79,13 +79,13 @@ Map::Map(int x, int y, int id)
         }
     } while (count > 0);
 
-    int num = Random::NextInt(1, x * y / 15);
-    for (int i = 0; i < num * 2; i++)
+    int num = Random::NextInt(1, x * y / 15); // tixaios arithmos sinolikwn vampires kai werewolves apo to 1 ews to x*y/15
+    for (int i = 0; i < num * 2; i++) // tixaies theseis gia ta vampire kai werewolves ston xarti
     {
         int xx = Random::NextInt(0, row_end);
         int yy = Random::NextInt(0, column_end);
         char tile = get_tile(xx, yy);
-        while (tile == 'v' || tile == 'w' || tile == '&')
+        while (tile == 'v' || tile == 'w' || tile == '&') // an einai tile poy exei idi xaraktira tote psakse neo tile
         {
             xx = Random::NextInt(0, row_end);
             yy = Random::NextInt(0, column_end);
@@ -101,7 +101,7 @@ Map::Map(int x, int y, int id)
     int yy = Random::NextInt(0, column_end);
     char tile = get_tile(xx, yy);
 
-    while (tile == 'v' || tile == 'w' || tile == '&')
+    while (tile == 'v' || tile == 'w' || tile == '&') // tixeo tile gia ton xaraktira mas an einai piasmeno psakse neo
     {
         xx = Random::NextInt(0, row_end);
         yy = Random::NextInt(0, column_end);
@@ -113,7 +113,7 @@ Map::Map(int x, int y, int id)
 
 void Map::print_map()
 {
-    size_t size = (column_end + 1) * 4 + 2;
+    size_t size = (column_end + 1) * 4 + 2;//oriothetisi toy map
     char* delimeter = new char[size];
     memset(delimeter, '-', size);
     delimeter[size - 1] = '\0';
@@ -130,29 +130,57 @@ void Map::print_map()
     }
 }
 
-void Map::print_stats()
+void Map::print_stats()//koumpi "P" ektipwnei ton sinoliko arithmo twn vampires kai werewolves kai gia kathe ena posh zwh exei
 {
     int werewolfs = 0, vampires = 0;
     for (NPC* npc : npcs)
     {
-        if (npc->GetID() == 3)
+        if (npc->GetID() == 3 && !npc->isDead())
             vampires++;
-        else
+        else if(!npc->isDead())
             werewolfs++;
     }
-    cout << "Vampires: " << vampires << '\n';
-    cout << "Werewolfs: " << werewolfs << '\n';
-    cout << "Player's potions: " << avatar->GetHealingPower() << '\n';
+    cout << "Vampires: (" << vampires << ")[";
+    for (NPC* npc : npcs)
+    {
+        if (npc->GetID() == 3)
+            cout << npc->GetHealth() << ", ";
+    }
+    cout << "]\n";
+    cout << "Werewolfs: (" << vampires << ")[";
+    for (NPC* npc : npcs)
+    {
+        if (npc->GetID() == 4)
+            cout << npc->GetHealth() << ", ";
+    }
+    cout << "]\n";
+    cout << "Player's potions: " << avatar->GetPotions() << '\n';
 }
 
 void Map::Move(int x, int y)
 {
-    avatar->Move(x, y);
+    avatar->Move(x, y);//meta apo kinisi tou xaraktira mas kinounte ola ta zwntana NPC
     for (NPC* npc : npcs)
-        npc->Move();
+    {
+        if (!npc->isDead())
+            npc->Move();
+    }
 }
 
-char Map::get_tile(int x, int y) const
+void Map::BattleRound(bool heal)//diadikasia maxis gia ton xaraktira mas kai gia ola ta zwntana NPC
+{
+    avatar->SetShouldHeal(heal);
+    avatar->BattleRound();
+    for (NPC* npc : npcs)
+    {
+        if(!npc->isDead())
+            npc->BattleRound();
+    }
+    isDay = !isDay;
+    cout << "Day: " << isDay<< "\n";
+}
+
+char Map::get_tile(int x, int y) const //epistrefei ton xaraktira poy tiponete ston xarti gia x,y
 {
     int id = map[x][y];
     for (NPC* npc : npcs)
@@ -167,7 +195,7 @@ char Map::get_tile(int x, int y) const
     if (avatar != nullptr)
     {
         if (avatar->GetX() == x && avatar->GetY() == y)
-            id = avatar->GetID();
+            id = avatar->GetID(); 
     }
 
     switch (id)
